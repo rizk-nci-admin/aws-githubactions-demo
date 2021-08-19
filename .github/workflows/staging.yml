@@ -1,6 +1,5 @@
 name: Staging Build Process
 on:
-  pull_request:
   push:
     branches:
       - feature-branch-demo
