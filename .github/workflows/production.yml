@@ -8,16 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     
     strategy:
+      fail-fast: false
       matrix:
         node-version: [12.x]
+        language: [ 'javascript' ]
         
     steps:
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
-      with:
-          languages: javascript
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -32,6 +28,12 @@ jobs:
     - name: Unit Tests
       run: |
         yarn test
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+          languages: ${{ matrix.language }}
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
       with:
