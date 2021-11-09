@@ -1,6 +1,5 @@
 name: Production Build Process
 on:
-  pull_request:
   push:
     branches:
       - main
@@ -9,8 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     
     strategy:
+      fail-fast: false
       matrix:
         node-version: [12.x]
+        language: [ 'javascript' ]
         
     steps:
     - uses: actions/checkout@v1
@@ -27,6 +28,12 @@ jobs:
     - name: Unit Tests
       run: |
         yarn test
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+          languages: ${{ matrix.language }}
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
     - name: Deploy to S3
       uses: jakejarvis/s3-sync-action@master
       with:
