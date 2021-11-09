@@ -12,6 +12,10 @@ jobs:
         node-version: [12.x]
         
     steps:
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+          languages: javascript
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
