@@ -16,6 +16,8 @@ jobs:
       uses: github/codeql-action/init@v1
       with:
           languages: javascript
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
