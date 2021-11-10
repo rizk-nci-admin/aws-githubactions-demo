@@ -22,7 +22,7 @@ jobs:
         language: ${{ env.langauge }}
   deploy-stage:
     runs-on: ubuntu-latest
-    environment: Staging
+    environment: staging
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v1
@@ -40,7 +40,7 @@ jobs:
         SOURCE_DIR: 'dist'
   deploy-production:
     runs-on: ubuntu-latest
-    environment: Production
+    environment: production
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/release'
     steps:
     - uses: actions/checkout@v1
