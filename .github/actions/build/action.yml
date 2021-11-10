@@ -21,11 +21,14 @@ runs:
   - name: Perform CodeQL Analysis
     uses: github/codeql-action/analyze@v1
   - name: Yarn Install
+    shell: bash
     run: |
       yarn install
   - name: Staging Build
+    shell: bash
     run: |
       yarn build
   - name: Unit Tests
+    shell: bash
     run: |
       yarn test
