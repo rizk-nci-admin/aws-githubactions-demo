@@ -13,6 +13,7 @@ env:
   language: 'javascript'
 jobs:
   build:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
