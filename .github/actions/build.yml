@@ -1,0 +1,31 @@
+name: Build Process
+inputs:
+  node-version:
+    required: true
+    default: 12.x
+  language:
+    required: true
+    default: javascript
+runs:
+  using: "composite"
+
+  steps:
+  - name: Use Node.js ${{ env.node-version }}
+    uses: actions/setup-node@v1
+    with:
+      node-version: ${{ env.node-version }}
+  - name: Initialize CodeQL
+    uses: github/codeql-action/init@v1
+    with:
+        languages: ${{ env.language }}
+  - name: Perform CodeQL Analysis
+    uses: github/codeql-action/analyze@v1
+  - name: Yarn Install
+    run: |
+      yarn install
+  - name: Staging Build
+    run: |
+      yarn build
+  - name: Unit Tests
+    run: |
+      yarn test
