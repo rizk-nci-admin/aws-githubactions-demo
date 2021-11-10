@@ -1,0 +1,27 @@
+name: Deploy Process
+inputs:
+  AWS_S3_BUCKET:
+    required: true
+  AWS_ACCESS_KEY_ID:
+    required: true
+  AWS_SECRET_ACCESS_KEY:
+    required: true
+  AWS_REGION:
+    default: us-east-1
+  SOURCE_DIR:
+    default: dist
+    
+runs:
+  using: "composite"
+
+  steps:
+  - name: Deploy to S3
+    uses: jakejarvis/s3-sync-action@master
+    with:
+      args: --acl public-read --delete
+    env:
+      AWS_S3_BUCKET: ${{ inputs.AWS_STAGING_BUCKET_NAME }}
+      AWS_ACCESS_KEY_ID: ${{ inputs.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ inputs.AWS_REGION }}
+      SOURCE_DIR: ${{ inputs.SOURCE_DIR }}   

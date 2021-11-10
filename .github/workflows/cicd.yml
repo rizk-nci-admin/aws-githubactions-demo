@@ -1,0 +1,58 @@
+name: CICD Process
+on:
+  push:
+    branches:
+      - main
+      - release
+  pull_request:
+    branches:
+      - main
+      - release
+env:
+  node-version: 12.x
+  language: 'javascript'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ./.github/actions/build
+      with:
+        node-version: ${{ env.node-version }}
+        language: ${{ env.langauge }}
+  deploy-stage:
+    runs-on: ubuntu-latest
+    environment: staging
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ./.github/actions/build
+      with:
+        node-version: ${{ env.node-version }}
+        language: ${{ env.langauge }}
+    - name: Deploy to S3
+      uses: ./.github/actions/deploy
+      with:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'
+        SOURCE_DIR: 'dist'
+  deploy-production:
+    runs-on: ubuntu-latest
+    environment: production
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/release'
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ./.github/actions/build
+      with:
+        node-version: ${{ env.node-version }}
+        language: ${{ env.langauge }}
+    - name: Deploy to S3
+      uses: ./.github/actions/deploy
+      with:
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET_NAME }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: 'us-east-1'
+        SOURCE_DIR: 'dist'
