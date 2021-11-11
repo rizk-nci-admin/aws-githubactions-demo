@@ -10,11 +10,18 @@ inputs:
     default: us-east-1
   SOURCE_DIR:
     default: dist
+  artifact-name:
+    default: build-artifact
     
 runs:
   using: "composite"
 
   steps:
+  - name: Download a Build Artifact
+    uses: actions/download-artifact@v2.0.10
+    with:
+      name: ${{ inputs.artifact-name }}
+      path: ${{ inputs.SOURCE_DIR }}
   - name: Deploy to S3
     uses: jakejarvis/s3-sync-action@master
     with:
