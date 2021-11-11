@@ -9,7 +9,6 @@ inputs:
   codescan:
     required: false
     default: true
-    type: boolean
 runs:
   using: "composite"
 
@@ -19,13 +18,13 @@ runs:
     with:
       node-version: ${{ inputs.node-version }}
   - name: Initialize CodeQL
-    if: inputs.codescan
+    if: inputs.codescan == 'true'
     uses: github/codeql-action/init@v1
     with:
         languages: ${{ inputs.language }}
         queries: security-and-quality
   - name: Perform CodeQL Analysis
-    if: inputs.codescan
+    if: inputs.codescan == 'true'
     uses: github/codeql-action/analyze@v1
   - name: Yarn Install
     shell: bash
