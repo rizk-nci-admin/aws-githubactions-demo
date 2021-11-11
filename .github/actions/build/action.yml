@@ -9,6 +9,7 @@ inputs:
   codescan:
     required: false
     default: true
+    type: boolean
 runs:
   using: "composite"
 
