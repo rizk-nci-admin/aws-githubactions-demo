@@ -32,5 +32,5 @@ runs:
       AWS_SECRET_ACCESS_KEY: ${{ inputs.AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ inputs.AWS_REGION }}
       SOURCE_DIR: ${{ inputs.SOURCE_DIR }}   
-   - name: Smoke Test
-     run: curl -f http://${{ inputs.AWS_S3_BUCKET }}.s3-website-us-east-1.amazonaws.com/
+  - name: Smoke Test
+    run: curl -f http://${{ inputs.AWS_S3_BUCKET }}.s3-website-us-east-1.amazonaws.com/
