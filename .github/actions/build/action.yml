@@ -44,6 +44,6 @@ runs:
   - name: Upload Build Artifact
     uses: actions/upload-artifact@v2
     with:
-      name: ${{ artifact-name }}
+      name: ${{ inputs.artifact-name }}
       path: dist
 
