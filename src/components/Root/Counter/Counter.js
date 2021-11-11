@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import styled from "styled-components";
-
+var foo = 7;
 const Button = styled.button`
   appearance: none;
   background-color: #555555;
