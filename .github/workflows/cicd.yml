@@ -45,10 +45,14 @@ jobs:
         AWS_REGION: 'us-east-1'
         SOURCE_DIR: 'dist'
   deploy-production:
-    needs: build
+    #Scenario 1: Build on PR from Main to Release
+    #needs: build
+    #if: github.event_name != 'pull_request' && github.ref == 'refs/heads/release'
+    #Scenario 2: Deploy to Production from Stage.
+    needs: deploy-stage
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/release'
     steps:
     - uses: actions/checkout@v1
     #- uses: ./.github/actions/build
