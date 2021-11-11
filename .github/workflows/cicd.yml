@@ -49,6 +49,7 @@ jobs:
       with:
         node-version: ${{ env.node-version }}
         language: ${{ env.langauge }}
+        codescan: false
     - name: Deploy to S3
       uses: ./.github/actions/deploy
       with:
