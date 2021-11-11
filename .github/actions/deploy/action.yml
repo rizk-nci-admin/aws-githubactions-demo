@@ -33,4 +33,5 @@ runs:
       AWS_REGION: ${{ inputs.AWS_REGION }}
       SOURCE_DIR: ${{ inputs.SOURCE_DIR }}   
   - name: Smoke Test
+    shell: bash
     run: curl -f http://${{ inputs.AWS_S3_BUCKET }}.s3-website-us-east-1.amazonaws.com/
