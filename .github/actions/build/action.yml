@@ -9,6 +9,9 @@ inputs:
   codescan:
     required: false
     default: true
+  artifact-name:
+    required: false
+    default: build-artifact
 runs:
   using: "composite"
 
@@ -38,3 +41,9 @@ runs:
     shell: bash
     run: |
       yarn test
+  - name: Upload Build Artifact
+    uses: actions/upload-artifact@v2
+    with:
+      name: ${{ artifact-name }}
+      path: dist
+
